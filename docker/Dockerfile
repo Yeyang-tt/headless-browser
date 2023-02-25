@@ -1,0 +1,19 @@
+FROM openanolis/openjdk:8-8.6
+MAINTAINER YeYang
+
+#设置中文编码
+RUN dnf install -y glibc-common
+RUN dnf install -y langpacks-zh_CN
+RUN source /etc/locale.conf
+ENV LANG zh_CN.utf8
+
+#设置时区
+ENV TZ=Asia/Shanghai
+
+WORKDIR /opt
+
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+RUN dnf install -y google-chrome-stable_current_x86_64.rpm
+RUN dnf install -y libXScrnSaver*
+
+CMD ["bash"]
