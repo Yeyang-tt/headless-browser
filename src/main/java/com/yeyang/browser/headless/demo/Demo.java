@@ -25,11 +25,18 @@ public class Demo {
 
         String path = PdfUtils.downloadPdf(url,
                 "/tmp/pdf",
-                "demo", ElementRenderListener::renderEvent);
+                "demo2", ElementRenderListener::renderEvent);
         System.out.println(path);
     }
 
+    private static void test3() {
+        String url = "https://nacos.io/zh-cn/index.html";
 
+        String path = PdfUtils.downloadPdf(url,
+                "/tmp/pdf",
+                "demo3", ElementRenderListener::renderEvent);
+        System.out.println(path);
+    }
 
 
 }
