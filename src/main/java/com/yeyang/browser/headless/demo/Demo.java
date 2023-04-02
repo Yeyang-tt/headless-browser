@@ -1,5 +1,6 @@
 package com.yeyang.browser.headless.demo;
 
+import com.ruiyun.jvppeteer.protocol.DOM.Margin;
 import com.yeyang.browser.headless.listener.ElementRenderListener;
 import com.yeyang.browser.headless.util.PdfUtils;
 
@@ -39,4 +40,23 @@ public class Demo {
     }
 
 
+    /**
+     * 自定义页边距
+     */
+    private static void test4() {
+        String url = "https://nacos.io/zh-cn/index.html";
+
+        //页边距
+        Margin margin = new Margin();
+        margin.setTop("10");
+        margin.setBottom("10");
+        margin.setLeft("10");
+        margin.setRight("10");
+
+        String path = PdfUtils.downloadPdf(url,
+                "/tmp/pdf",
+                "demo4", ElementRenderListener::renderEvent,
+                margin);
+        System.out.println(path);
+    }
 }

@@ -26,73 +26,88 @@ import java.util.function.Consumer;
  */
 public class PdfUtils {
 
-    /**
-     * 无头浏览器下载PDF文件
-     *
-     * @param url            url
-     * @param path           路径
-     * @param fileName       文件名
-     * @param consumer       渲染监听器
-     * @return {@link String}
-     */
-    @SneakyThrows
-    public static String downloadPdf(String url, String path, String fileName, Consumer<Page> consumer) {
-        if (StrUtil.isBlank(url) || StrUtil.isBlank(path) || StrUtil.isBlank(fileName)) {
-            throw new RuntimeException("Parameter is null or empty");
-        }
+	/**
+	 * 无头浏览器下载PDF文件
+	 *
+	 * @param url      url
+	 * @param path     路径
+	 * @param fileName 文件名
+	 * @param listener 渲染监听器
+	 * @return {@link String}
+	 */
+	@SneakyThrows
+	public static String downloadPdf(String url, String path, String fileName, Consumer<Page> listener) {
+		//默认页边距
+		Margin margin = new Margin();
+		margin.setTop("40");
 
-        Browser browser = null;
-        Page page = null;
-        try {
-            //驱动自动下载，第一次下载后不会再下载
-            BrowserFetcher.downloadIfNotExist(null);
-            List<String> args = Arrays.asList("--no-sandbox", "--disable-setuid-sandbox");
+		return downloadPdf(url, path, fileName, listener, margin);
+	}
 
-            //生成pdf必须在无厘头模式下才能生效
-            LaunchOptions options = new LaunchOptionsBuilder()
-                    .withArgs(args)
-                    .withHeadless(true)
-                    .build();
+	/**
+	 * 无头浏览器下载PDF文件
+	 *
+	 * @param url      url
+	 * @param path     路径
+	 * @param fileName 文件名称
+	 * @param listener 渲染监听器
+	 * @param margin   页边距
+	 * @return {@link String}
+	 */
+	@SneakyThrows
+	public static String downloadPdf(String url, String path, String fileName, Consumer<Page> listener, Margin margin) {
+		if (StrUtil.isBlank(url) || StrUtil.isBlank(path) || StrUtil.isBlank(fileName)) {
+			throw new RuntimeException("Parameter is null or empty");
+		}
 
-            browser = Puppeteer.launch(options);
-            page = browser.newPage();
-            page.goTo(url);
+		Browser browser = null;
+		Page page = null;
+		try {
+			//驱动自动下载，第一次下载后不会再下载
+			BrowserFetcher.downloadIfNotExist(null);
+			List<String> args = Arrays.asList("--no-sandbox", "--disable-setuid-sandbox");
 
-            //渲染监听器,可以实现监听逻辑
-            consumer.accept(page);
+			//生成pdf必须在无厘头模式下才能生效
+			LaunchOptions options = new LaunchOptionsBuilder()
+					.withArgs(args)
+					.withHeadless(true)
+					.build();
 
-            //文件路径
-            String filePath = String.format("%s/%s.pdf", path, fileName);
+			browser = Puppeteer.launch(options);
+			page = browser.newPage();
+			page.goTo(url);
 
-            //顶部的页边距
-            Margin margin = new Margin();
-            margin.setTop("40");
+			//渲染监听器,可以实现监听逻辑
+			listener.accept(page);
 
-            PDFOptions pdfOptions = new PDFOptions();
-            pdfOptions.setMargin(margin);
-            pdfOptions.setPath(filePath);
-            page.pdf(pdfOptions);
+			//文件路径
+			String filePath = String.format("%s/%s.pdf", path, fileName);
 
-            return filePath;
-        } catch (InterruptedException | IOException | ExecutionException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (page != null) {
-                page.close();
-            }
-            if (browser != null) {
-                browser.close();
-            }
-        }
-    }
+			PDFOptions pdfOptions = new PDFOptions();
+			pdfOptions.setMargin(margin);
+			pdfOptions.setPath(filePath);
+			page.pdf(pdfOptions);
 
-    /**
-     * 日期路径
-     *
-     * @return {@link String}
-     */
-    public static String datePath() {
-        LocalDate now = LocalDate.now();
-        return String.format("/%s/%s/%s", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
-    }
+			return filePath;
+		} catch (InterruptedException | IOException | ExecutionException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (page != null) {
+				page.close();
+			}
+			if (browser != null) {
+				browser.close();
+			}
+		}
+	}
+
+	/**
+	 * 日期路径
+	 *
+	 * @return {@link String}
+	 */
+	public static String datePath() {
+		LocalDate now = LocalDate.now();
+		return String.format("/%s/%s/%s", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+	}
 }
