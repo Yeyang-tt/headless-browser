@@ -2,7 +2,16 @@
 #### 参考资料：[jvppeteer](https://github.com/fanyong920/jvppeteer)
 ####
 ___
-### Docker镜像
+### 1.Maven依赖
+#### 无头浏览器依赖
+```xml
+<dependency>
+    <groupId>io.github.fanyong920</groupId>
+    <artifactId>jvppeteer</artifactId>
+    <version>1.1.5</version>
+</dependency>
+```
+### 2.Docker镜像
 #### 1.使用./docker/Dockerfile 构建镜像
 ```shell
 docker build -t java8-chrome -f ./docker/Dockerfile .
