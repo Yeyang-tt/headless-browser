@@ -1,0 +1,11 @@
+FROM java8-chrome
+
+ENV TZ=Asia/Shanghai
+
+WORKDIR /opt/project
+
+ADD ../target/app.jar ./app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar", "app.jar"]
