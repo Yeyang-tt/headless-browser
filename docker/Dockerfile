@@ -17,3 +17,6 @@ RUN dnf install -y google-chrome-stable_current_x86_64.rpm
 RUN dnf install -y libXScrnSaver*
 
 CMD ["bash"]
+
+#构建命令
+#docker build -t java8-chrome -f ./docker/Dockerfile .
