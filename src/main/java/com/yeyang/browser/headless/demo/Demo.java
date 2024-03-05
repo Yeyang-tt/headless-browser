@@ -17,7 +17,8 @@ public class Demo {
         String url = "http://www.baidu.com";
         String path = PdfUtils.downloadPdf(url,
                 "/tmp/pdf",
-                "demo", x -> {});
+                "demo", x -> {
+                });
         System.out.println(path);
     }
 
@@ -46,7 +47,7 @@ public class Demo {
     private static void test4() {
         String url = "https://nacos.io/zh-cn/index.html";
 
-        //页边距
+        // 页边距
         Margin margin = new Margin();
         margin.setTop("10");
         margin.setBottom("10");
@@ -57,6 +58,15 @@ public class Demo {
                 "/tmp/pdf",
                 "demo4", ElementRenderListener::renderEvent,
                 margin);
+        System.out.println(path);
+    }
+
+    private static void test5() {
+        String url = "http://www.baidu.com";
+        String path = PdfUtils.downloadPdf(url,
+                "/tmp/pdf",
+                "demo", x -> {
+                });
         System.out.println(path);
     }
 }
