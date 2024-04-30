@@ -6,6 +6,7 @@ import com.qcloud.cos.auth.BasicSessionCredentials;
 import com.qcloud.cos.model.*;
 import com.qcloud.cos.region.Region;
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 
 import java.io.File;
 
@@ -15,6 +16,7 @@ import java.io.File;
  * @author Yeyang
  * @date 2024/04/15
  */
+@UtilityClass
 public class TencentUtils {
 
     public COSClient createCOSClient() {
