@@ -31,4 +31,16 @@ public class OssDemo {
         Bucket bucket = TencentUtils.createBucket(cosClient);
         TencentUtils.uploadFile(cosClient, path);
     }
+
+
+    private static void test3() {
+        String url = "https://movie.douban.com";
+        String path = PdfUtils.downloadPdf(url,
+                "/tmp/pdf",
+                "demo", x -> {
+                });
+        System.out.println(path);
+
+        OssUtil.uploadFile("public", "demo", path);
+    }
 }
