@@ -41,4 +41,36 @@ public class CommandUtil {
             }
         }
     }
+
+    /**
+     * linux
+     *
+     * @param command 命令
+     */
+    public void execLinux(String command) {
+        Process process = null;
+        try {
+            process = Runtime.getRuntime().exec(command);
+            int exitStatus = 0;
+            int errorCount = 1;
+            // 等待子进程完成再往下执行，返回值是子线程执行完毕的返回值,返回0表示正常结束
+            exitStatus = process.waitFor();
+            // 第二种接受返回值的方法
+            // 接收执行完毕的返回值
+            int i = process.exitValue();
+            log.debug("命令行工具-linux命令：{}：{}", command, i);
+            // if (i != 0) {
+            // 	LinuxExec(cmd);
+            // }
+        } catch (Exception e) {
+            log.error("命令行工具-linux命令异常：", e);
+
+        } finally {
+            if (process != null) {
+                // 销毁子进程
+                process.destroy();
+            }
+        }
+    }
+
 }
