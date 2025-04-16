@@ -10,6 +10,21 @@ import java.io.InputStream;
 public class CommandUtil {
 
     /**
+     * 自动
+     *
+     * @param command 命令
+     */
+    public void execAuto(String command) {
+        String osName = System.getProperty("os.name");
+        log.debug("命令行工具-执行命令-系统名称：{}", osName);
+        if (osName.contains("Windows")) {
+            execWindow(command);
+        } else {
+            execLinux(command);
+        }
+    }
+
+    /**
      * window
      *
      * @param command 命令
