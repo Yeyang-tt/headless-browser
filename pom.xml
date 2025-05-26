@@ -20,6 +20,8 @@
         <poi.tl.version>1.12.1</poi.tl.version>
         <pdfbox.version>2.0.29</pdfbox.version>
         <aspose.version>23.1</aspose.version>
+        <batik.version>1.17</batik.version>
+        <jodconverter-local.version>4.4.8</jodconverter-local.version>
     </properties>
 
     <dependencies>
@@ -97,6 +99,16 @@
             <groupId>com.luhuiguo</groupId>
             <artifactId>aspose-words</artifactId>
             <version>${aspose.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-all</artifactId>
+            <version>${batik.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jodconverter</groupId>
+            <artifactId>jodconverter-local</artifactId>
+            <version>${jodconverter-local.version}</version>
         </dependency>
     </dependencies>
 </project>
